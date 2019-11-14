@@ -1,0 +1,87 @@
+body * {
+  cursor: wait;
+}
+button {
+  background: #404040;
+  padding: 10px 30px;
+  font-size: 17px 15px;
+  letter-spacing: 1px;
+  color: #fff;
+  border-radius: 5px;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: transparent;
+  width: 15vw;
+  animation-name: example;
+  animation-duration: 0.5s;
+}
+
+button:hover {
+  animation: gay;
+}
+
+
+@keyframes example {
+  0% {background-color: #404040;}
+  50% {background-color: lawngreen;}
+  100% {background-color: #404040;}
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
+  outline: none;
+}
+
+input[type=text] {
+  background-color: #ffffff;
+  padding: 12px 20px;
+  border: 3px solid #dddddd;
+  border-radius: 3px;
+  width: 15vw;
+}
+
+textarea:focus {
+  border: 3px solid red;
+  outline: none;
+}
+
+textarea {
+  background: url("molbo.gif");
+  background-color: greeb;
+  padding: 12px 20px;
+  border: 3px solid green;
+  border-radius: 3px;
+  width: 15vw;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20;
+  grid-gap: 10px;
+  background: url("carrot2.jpeg");
+  padding: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+#connectionStatus {
+  justify-items: center;
+  align-items: center;
+  text-transform: uppercase;
+  color: red;
+  font-family: "Comic Sans MS";
+  font-size: 50px;
+}
+
+* {
+  background: url("favicon.jpeg");
+  font-family: "Comic Sans MS" !important;
+}

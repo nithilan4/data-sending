@@ -19,6 +19,11 @@ app.get('/', (req, res) => {
 });
 
 app.get(RegExp(".+"), (req, res) => {
+  
+  if (req.url == "/style.css") {
+    res.send("testsr")
+  }
+  
   res.sendFile(__dirname + req.url);
 });
 
@@ -35,48 +40,36 @@ io.on('connect', (socket) => {
 			client.close();
 		});
   })
-  socket.on("data", (data,cb) => {
-    console.log(data)
-    //add data to db
-    var client = new MongoClient(url);
-		client.connect((err) => {
-			assert.equal(null, err);
-			console.log("SERVER+MONGO: Connected correctly to server");
-			var db = client.db(dbName);
-      var collection = db.collection('documents')
-			collection.insertOne({
-				userData : data
-			}, (err, result) => {
-				console.log("SERVER+MONGO: Inserted 1 documents into the collection");
-        cb();
-			});
-			client.close();
-		});
-  });
-
-
   socket.on("sync", (data,cb) => {
-    console.log(data)
-    //add data to db
+    //sync data (2d array) to db
     var client = new MongoClient(url);
 		client.connect((err) => {
 			assert.equal(null, err);
 			console.log("SERVER+MONGO: Connected correctly to server");
 			var db = client.db(dbName);
       var collection = db.collection('documents')
-			collection.insertMany(data, (err, result) => {
-				console.log("SERVER+MONGO: Inserted unsent data into collection");
-        cb();
-			});
-			client.close();
+      collection.find({}).toArray((err, result) => {
+        var ids = [];
+        result.forEach((x) => {ids.push(x._id)});
+        console.log("SERVER+MONGO: Found Database")
+        finalData = data.filter((y) => {
+          return (ids.indexOf(y._id) == -1)
+        });
+        if (finalData.length == 0) {
+          client.close();
+          console.log("SERVER+MONGO: No data to insert.");
+          cb();
+          return
+        }
+        collection.insertMany(finalData, (err, result) => {
+          if (err) {throw err};
+          console.log("SERVER+MONGO: Inserted data into collection");
+          cb();
+          client.close();
+        });
+      })
 		});
   });
-
-	socket.on("check", (cb) => {
-		cb()
-	})
-
-
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
@@ -87,7 +80,7 @@ io.on('connect', (socket) => {
 
 //https://mongodb.github.io/node-mongodb-native/3.3/quick-start/quick-start/
 
-/* ==== NODE SERVER ==== */
+/* ==== SOCKET ==== */
 http.listen(3000, function(){
 	console.log('listening on *:3000');
 });

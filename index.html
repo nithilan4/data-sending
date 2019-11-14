@@ -1,21 +1,29 @@
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <textarea id="text"></textarea>
-		<br>
-		<br>
-    <button id="button">submit + sync</button>
-		<p id="submitStatus"></p>
-		<br>
-		<button id="sync">sync local data</button>
-		<p id="syncStatus"></p>
-		<br>
-		<button id="connected">check connection</button>
-		<p id="connectionStatus"></p>
+    <div class ="grid-container">
+      <div>
+        <textarea id="text"></textarea>
+      </div>
+      <div>
+        <button id="button">submit + sync</button>
+      </div>
+      <div>
+        <input type="text" placeholder="data id (match string)" id="id"> 
+      </div>
+      <div>
+        <button id="sync">sync local data</button>
+      </div>
+      <div>
+        <button id="connected">check connection</button>
+      </div> 
+      <div> 
+        <p id="connectionStatus"></p>
+      </div>
+    </div>  
     <script src="/socket.io-client/dist/socket.io.js"></script>
     <script src="client.js"></script>
   </body>
 </html>
-
-<!-- bruh get out of my repl -->
